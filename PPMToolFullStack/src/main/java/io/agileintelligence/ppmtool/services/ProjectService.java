@@ -42,8 +42,9 @@ public class ProjectService {
         if(project == null) {
             throw new ProjectIdException("Project "+ projectId + " doesn't exist! Can't not delete the project");
         }
-
         projectRepository.delete(project);
-
     }
+
+
+
 }
