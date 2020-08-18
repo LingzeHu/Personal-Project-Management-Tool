@@ -1,11 +1,16 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+import ProjectItem from "./Project/ProjectItem";
+import Header from "./Layout/Header";
 
 class Dashboard extends Component {
-    render() {
-        return (
-            <h1>Welcome to the Dashborad</h1>
-        )
-    }
+  render() {
+    return (
+      <div>
+            <Header></Header>
+          <ProjectItem></ProjectItem>
+      </div>
+    );
+  }
 }
 
 export default Dashboard;
