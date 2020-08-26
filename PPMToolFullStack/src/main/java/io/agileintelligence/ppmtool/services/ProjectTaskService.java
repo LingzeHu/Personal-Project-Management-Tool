@@ -7,6 +7,8 @@ import io.agileintelligence.ppmtool.repository.ProjectTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProjectTaskService {
     @Autowired
@@ -22,21 +24,27 @@ public class ProjectTaskService {
         projectTask.setBacklog(backlog);
         // we want our project sequence to be like this: IDPRO-1
         Integer BacklogSequence = backlog.getPTSequence();
-        // UPdate the backlog Sequence
+        // Update the backlog Sequence
         BacklogSequence++;
+        backlog.setPTSequence(BacklogSequence);
         // Add sequence to project task
         projectTask.setProjectSequence(projectIdentifier + "-" + BacklogSequence);
         projectTask.setProjectIdentifier(projectIdentifier);
 
+
         // INITIAL priority when priority null
-//        if (projectTask.getPriority() == 0 || projectTask.getPriority() == null) {
-//            projectTask.setPriority(3);
-//        }
+        if (projectTask.getPriority() == null) {
+            projectTask.setPriority(3);
+        }
         // INITIAL status when status null
         if (projectTask.getStatus() == "" || projectTask.getStatus() == null) {
             projectTask.setStatus("TO_DO");
         }
 
         return projectTaskRepository.save(projectTask);
+    }
+
+    public Iterable<ProjectTask> findBacklogById(String id) {
+        return projectTaskRepository.findByProjectIdentifierOrderByPriority(id);
     }
 }
